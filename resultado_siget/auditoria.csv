@@ -1,0 +1,21 @@
+﻿etapa,tabela,motivo,quantidade
+rejeicao,Contrato,Contrato excluído por IdAgente ausente,1
+extracao,Agente,linhas criadas,266
+extracao,Contrato,linhas criadas,369
+rejeicao,Central,IdeCcdProprietario não encontrado: linha removida,293
+extracao,Empreendimento,linhas criadas,2786
+extracao,Modulo,linhas criadas,15842
+extracao,Obra,linhas criadas,17339
+rejeicao,Linha,Módulo sem obra válida: linha removida,13
+rejeicao,Equipamento,Módulo sem obra válida: linha removida,71
+rejeicao,Manobra,Módulo sem obra válida: linha removida,189
+rejeicao,Subestacao,Identificadores com atributos contraditórios; excluídos,12
+rejeicao,Linha,Terminal vinculado a subestação inconsistente; excluído,33
+rejeicao,Equipamento,Subestação inconsistente; registro excluído,37
+rejeicao,Manobra,Subestação inconsistente; registro excluído,101
+limpeza,Subestacao,identificadores de subestação excluídos,6
+extracao,Subestacao,linhas válidas criadas,817
+extracao,LinhaTransmissao,linhas criadas,1054
+extracao,ModuloLinha,linhas criadas,1456
+extracao,ModuloEquipamento,linhas criadas,4027
+extracao,ModuloManobra,linhas criadas,9262

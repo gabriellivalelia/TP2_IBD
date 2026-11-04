@@ -1,0 +1,13 @@
+
+PRAGMA foreign_keys = ON;
+CREATE TABLE Agente (IdAgente TEXT PRIMARY KEY,NumCNPJ TEXT,DscRazaoSocial TEXT,NumCEPAgente TEXT,SigUF TEXT,NomMunicipio TEXT,NomBairroAgente TEXT,DscEnderecoAgente TEXT);
+CREATE TABLE Contrato (IdeCcd TEXT PRIMARY KEY,IdAgente TEXT,IdcTipoCcd TEXT,NumCnaCcd TEXT,DatAsnCcd TEXT,DatFimCcd TEXT,IdeCcoTarReceita TEXT,FOREIGN KEY(IdAgente) REFERENCES Agente(IdAgente));
+CREATE TABLE Empreendimento (IdeEpd TEXT PRIMARY KEY,IdeCcd TEXT NOT NULL,IdeOnsEpd TEXT,NomEpd TEXT,DscEpd TEXT,DscSituacaoEpd TEXT,DatCaoCgmAtoLgl TEXT,DatOprComEpd TEXT,DatEfeOprComEpd TEXT,FOREIGN KEY(IdeCcd) REFERENCES Contrato(IdeCcd));
+CREATE TABLE Modulo (IdeMdl TEXT PRIMARY KEY,IdeOnsMdl TEXT,NomMdl TEXT,DscMdl TEXT,IdeTipMdl TEXT,DscSituacaoModulo TEXT,DscTipMdl TEXT,SigTipMdl TEXT,DscClfMdl TEXT,SglClfMdl TEXT,DscItmClfMdl TEXT);
+CREATE TABLE Obra (IdeObr TEXT PRIMARY KEY,IdeEpd TEXT NOT NULL,IdeMdl TEXT NOT NULL,DscObr TEXT,DscSitObr TEXT,DscTipObr TEXT,NumVdaUtlMdl INTEGER,VlrHisRct REAL,DatOprComObr TEXT,FOREIGN KEY(IdeEpd) REFERENCES Empreendimento(IdeEpd),FOREIGN KEY(IdeMdl) REFERENCES Modulo(IdeMdl));
+CREATE TABLE Subestacao (IdeSbe TEXT PRIMARY KEY,IdeOnsSbe TEXT,NomSubestacao TEXT,NomLongoSubestacao TEXT,SigUFSubestacao TEXT);
+CREATE TABLE LinhaTransmissao (IdeLinTms TEXT PRIMARY KEY,NomLinTms TEXT,DscSitLinTms TEXT,NumTensaoBaseLinhaTransm REAL);
+CREATE TABLE ModuloLinha (IdeMdl TEXT PRIMARY KEY,IdeLinTms TEXT NOT NULL,NumCcuLinTms INTEGER,QtdTorLinTms INTEGER,NumEtnLinTms REAL,FOREIGN KEY(IdeMdl) REFERENCES Modulo(IdeMdl),FOREIGN KEY(IdeLinTms) REFERENCES LinhaTransmissao(IdeLinTms));
+CREATE TABLE ModuloEquipamento (IdeMdl TEXT PRIMARY KEY,IdeSbe TEXT NOT NULL,DscTipEqp TEXT,NumFasMdlEqp TEXT,MdaPotAtvMdlEqp REAL,MdaTnsScdMdlEqp REAL,MdaTnsTiaMdlEqp REAL,DscFinMdlEqp TEXT,MdaCpeRaiNegMdlEqp REAL,MdaCpeRaivPosMdlEqp REAL,DscIdcExsMdlCnr TEXT CHECK (DscIdcExsMdlCnr IN ('S','N') OR DscIdcExsMdlCnr IS NULL),FOREIGN KEY(IdeMdl) REFERENCES Modulo(IdeMdl),FOREIGN KEY(IdeSbe) REFERENCES Subestacao(IdeSbe));
+CREATE TABLE ModuloManobra (IdeMdl TEXT PRIMARY KEY,IdeSbe TEXT NOT NULL,IdeTipAnjManobra TEXT,IdcTipMdlMno TEXT,IdeTipAnj TEXT,SglTipAnj TEXT,DscTipAnj TEXT,DscMdlMno TEXT,QtdDijMdlMno INTEGER,QtdChvSccMdlMno INTEGER,FOREIGN KEY(IdeMdl) REFERENCES Modulo(IdeMdl),FOREIGN KEY(IdeSbe) REFERENCES Subestacao(IdeSbe));
+CREATE TABLE LinhaSubestacao (IdeLinTms TEXT NOT NULL, IdeSbe TEXT NOT NULL, Papel TEXT NOT NULL CHECK (Papel IN ('Origem','Destino')), PRIMARY KEY(IdeLinTms,Papel), UNIQUE(IdeLinTms,IdeSbe),FOREIGN KEY(IdeLinTms) REFERENCES LinhaTransmissao(IdeLinTms),FOREIGN KEY(IdeSbe) REFERENCES Subestacao(IdeSbe));
