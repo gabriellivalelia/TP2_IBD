@@ -1,10 +1,30 @@
 [project]
 name = "tp2"
 version = "0.1.0"
-description = "Add your description here"
+description = "TP2 DCC011/UFMG: banco relacional do SIGET/ANEEL, consultas SQL e aplicação Streamlit"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "ipykernel>=7.4.0",
     "pandas>=3.1.0",
+    "plotly>=7.1.0",
+    "streamlit>=1.67.0",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 120
+src = ["app"]
+
+[tool.ruff.lint]
+select = ["F", "E", "I", "B", "UP"]
+ignore = ["E501"]  # o formatador cuida do código; textos longos em português ficam inteiros

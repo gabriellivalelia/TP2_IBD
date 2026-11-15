@@ -8,3 +8,19 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Cache da aplicação Streamlit (réplica UTF-8 do banco)
+app/.cache/
+
+# Caches de ferramentas (pytest, ruff, Jupyter)
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Configurações locais de editor, assistente e sistema
+.claude/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.streamlit/secrets.toml

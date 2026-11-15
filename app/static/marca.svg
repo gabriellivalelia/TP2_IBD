@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="SIGET">
+  <rect width="48" height="48" rx="10" fill="#14606E"/>
+  <path d="M12 12v24M36 12v24" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+  <path d="M12 24h24" stroke="#DCE6EC" stroke-width="2.5"/>
+  <circle cx="24" cy="24" r="4.5" fill="#E3A21A"/>
+</svg>

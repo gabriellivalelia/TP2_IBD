@@ -1,0 +1,41 @@
+# Tema visual da aplicação SIGET Explorer.
+# Paleta derivada dos diagramas ER/relacional do grupo (azul-marinho + petróleo),
+# com âmbar de sinalização de alta tensão como único acento quente.
+
+[server]
+headless = true
+runOnSave = true
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"
+
+[theme]
+base = "light"
+primaryColor = "#14606E"
+backgroundColor = "#F5F7F8"
+secondaryBackgroundColor = "#E9EEF1"
+textColor = "#12263A"
+linkColor = "#14606E"
+borderColor = "#D6DEE3"
+showWidgetBorder = true
+baseRadius = "0.5rem"
+font = "'Public Sans', system-ui, sans-serif"
+headingFont = "'Archivo', 'Public Sans', sans-serif"
+codeFont = "'JetBrains Mono', ui-monospace, monospace"
+codeFontSize = "0.82rem"
+# As famílias tipográficas são carregadas do Google Fonts em app/siget/ui/theme.py.
+headingFontWeights = [800, 700, 650, 600, 600, 600]
+dataframeHeaderBackgroundColor = "#EEF2F4"
+chartCategoricalColors = ["#14606E", "#E3A21A", "#3A7CA5", "#C2413B", "#5B4B9A", "#7A8C99"]
+
+[theme.sidebar]
+backgroundColor = "#12263A"
+secondaryBackgroundColor = "#1B3550"
+textColor = "#DCE6EC"
+borderColor = "#24405C"
+primaryColor = "#E3A21A"
+linkColor = "#E3A21A"
+codeBackgroundColor = "#1B3550"
