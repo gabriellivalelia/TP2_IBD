@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import re
 import unicodedata
-from collections.abc import Iterable, Mapping, Sequence
+from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from html import escape
 
@@ -120,6 +120,7 @@ def grafico(
     *,
     chave: str | None = None,
     selecionavel: bool = False,
+    ao_selecionar: Callable[[], None] | None = None,
     rolagem: bool = False,
 ):
     """Renderiza uma figura Plotly com o template da aplicação.
@@ -127,6 +128,8 @@ def grafico(
     O título sai do Plotly e vira HTML: assim ele quebra linha em telas estreitas e
     não fica sob a barra de ferramentas do gráfico. Com ``rolagem=True`` o gráfico
     mantém largura mínima e rola na horizontal (útil para matrizes densas).
+    ``ao_selecionar`` roda antes do rerun, então o estado que ele altera já vale
+    para tudo o que for desenhado em seguida (inclusive o próprio gráfico).
     """
     titulo = fig.layout.title.text
     if titulo:
@@ -140,7 +143,7 @@ def grafico(
             theme=None,
             config=PLOTLY_CONFIG,
             key=chave,
-            on_select="rerun" if selecionavel else "ignore",
+            on_select=ao_selecionar or ("rerun" if selecionavel else "ignore"),
             selection_mode="points",
         )
 

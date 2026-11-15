@@ -13,6 +13,7 @@ from siget.ui.theme import COR, CORES_CLASSES, ORDEM_CLASSES, classe_tensao
 
 BRASIL = "Brasil"
 CHAVE_UF = "rede-uf"
+CHAVE_MAPA = "rede-mapa"
 
 INDICADORES = {
     "Subestações": ("subestacoes", ",.0f"),
@@ -61,13 +62,13 @@ def _por_uf(subestacoes: pd.DataFrame) -> pd.DataFrame:
     )
 
 
-def _sincronizar_selecao_mapa(evento) -> None:
-    """Aplica o clique no mapa à UF em foco (somente quando o clique muda)."""
-    pontos = (evento or {}).get("selection", {}).get("points", []) if evento else []
-    assinatura = tuple(p.get("point_index") for p in pontos)
-    if assinatura == st.session_state.get("rede-ultimo-clique"):
-        return
-    st.session_state["rede-ultimo-clique"] = assinatura
+def _aplicar_clique_mapa() -> None:
+    """Leva a UF clicada no mapa para o seletor "UF em foco".
+
+    Roda como callback, antes do rerun: o mapa já é redesenhado com o destaque na
+    UF nova, junto com os números e o seletor.
+    """
+    pontos = st.session_state[CHAVE_MAPA].selection.points
     if pontos:
         st.session_state[CHAVE_UF] = list(charts.GRADE_UF)[pontos[0]["point_index"]]
 
@@ -91,7 +92,7 @@ def render() -> None:
     mapa_col, foco_col = st.columns([1, 1.25], gap="large")
     with mapa_col:
         uf_atual = st.session_state.get(CHAVE_UF, BRASIL)
-        evento = grafico(
+        grafico(
             charts.mapa_ufs(
                 por_uf,
                 "uf",
@@ -100,10 +101,9 @@ def render() -> None:
                 formato=formato,
                 selecionadas=[uf_atual] if uf_atual != BRASIL else [],
             ),
-            chave="rede-mapa",
-            selecionavel=True,
+            chave=CHAVE_MAPA,
+            ao_selecionar=_aplicar_clique_mapa,
         )
-        _sincronizar_selecao_mapa(evento)
         st.caption("Cartograma: cada ladrilho é uma UF, na posição aproximada do mapa.")
 
     with foco_col:
