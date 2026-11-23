@@ -17,9 +17,7 @@ RESULTS_DIR = ROOT_DIR / "resultado_siget"
 SOURCE_DB = RESULTS_DIR / "siget_normalizado.db"
 AUDIT_CSV = RESULTS_DIR / "auditoria.csv"
 NOTEBOOK = ROOT_DIR / "tp2.ipynb"
-IMAGES_DIR = ROOT_DIR / "images"
-ER_DIAGRAM = IMAGES_DIR / "diagrama_er_siget.png"
-RELATIONAL_DIAGRAM = IMAGES_DIR / "diagrama_relacional_siget.png"
+# As imagens dos diagramas vêm das referências no próprio notebook (data/report.py).
 
 CACHE_DIR = APP_DIR / ".cache"
 REPLICA_DB = CACHE_DIR / "siget_utf8.db"

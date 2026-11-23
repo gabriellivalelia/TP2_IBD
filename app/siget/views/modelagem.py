@@ -7,8 +7,8 @@ from html import escape
 import pandas as pd
 import streamlit as st
 
-from siget import settings
 from siget.data.database import Tabela, consultar, ddl, esquema
+from siget.data.report import Diagrama, diagramas
 from siget.ui import formatting as fmt
 from siget.ui.components import cabecalho_pagina, secao
 from siget.ui.theme import COR
@@ -113,6 +113,21 @@ def _detalhe_tabela(tabela: Tabela) -> None:
     st.dataframe(consultar(f'SELECT * FROM "{tabela.nome}" LIMIT 8'), hide_index=True, width="stretch")
 
 
+def _diagrama(diagrama: Diagrama | None, nome: str) -> None:
+    """Imagem e texto do diagrama exatamente como o notebook os apresenta."""
+    if diagrama is None or diagrama.imagem is None:
+        st.warning(f"O notebook não tem uma imagem na seção \"Diagrama {nome}\".", icon=":material/image:")
+    elif not diagrama.imagem.is_file():
+        st.warning(
+            f"O notebook aponta para {diagrama.imagem.name}, mas o arquivo não está na pasta images/.",
+            icon=":material/broken_image:",
+        )
+    else:
+        st.image(str(diagrama.imagem), width="stretch")
+    if diagrama and diagrama.texto:
+        st.markdown(diagrama.texto)
+
+
 def render() -> None:
     cabecalho_pagina(
         "Seções 4 e 5 do relatório",
@@ -123,8 +138,9 @@ def render() -> None:
 
     aba_er, aba_rel, aba_esquema, aba_ddl = st.tabs(["Diagrama ER", "Relacional", "Esquema", "DDL"])
 
+    figuras = diagramas()
     with aba_er:
-        st.image(str(settings.ER_DIAGRAM), width="stretch")
+        _diagrama(figuras.get("er"), "ER")
         secao("Relacionamentos", "Tabela 3 do relatório")
         st.dataframe(
             RELACIONAMENTOS,
@@ -134,7 +150,7 @@ def render() -> None:
         )
 
     with aba_rel:
-        st.image(str(settings.RELATIONAL_DIAGRAM), width="stretch")
+        _diagrama(figuras.get("relacional"), "relacional")
 
     with aba_esquema:
         tabelas = esquema()

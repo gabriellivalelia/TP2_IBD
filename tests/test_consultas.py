@@ -19,7 +19,7 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "app"))
 
 from siget.data.database import ErroConsulta, consultar, executar_livre  # noqa: E402
-from siget.data.report import trechos_consultas  # noqa: E402
+from siget.data.report import diagramas, trechos_consultas  # noqa: E402
 from siget.queries import CONSULTAS  # noqa: E402
 
 TRECHOS = trechos_consultas()
@@ -29,6 +29,13 @@ def test_notebook_tem_as_dez_consultas() -> None:
     assert sorted(TRECHOS) == list(range(1, 11))
     assert all(t.sql for t in TRECHOS.values())
     assert all(t.analise for t in TRECHOS.values())
+
+
+@pytest.mark.parametrize("nome", ["er", "relacional"])
+def test_diagramas_do_notebook_existem(nome: str) -> None:
+    diagrama = diagramas().get(nome)
+    assert diagrama is not None and diagrama.imagem is not None, f"seção do diagrama {nome} sem imagem"
+    assert diagrama.imagem.is_file(), f"o notebook aponta para {diagrama.imagem}, que não existe"
 
 
 @pytest.mark.parametrize("consulta", CONSULTAS, ids=lambda c: c.codigo)
