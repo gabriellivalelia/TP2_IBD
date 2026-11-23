@@ -116,7 +116,7 @@ def render() -> None:
     with texto_col:
         destaque_markdown(
             "Critério adotado",
-            "Registros inválidos foram **excluídos**, não corrigidos por suposição — e a exclusão se "
+            "Registros inválidos foram **excluídos**, não corrigidos por suposição, e a exclusão se "
             "propaga aos dependentes.\n\n"
             "- 1 contrato sem agente identificado;\n"
             "- 293 linhas do arquivo central apontavam para 14 contratos inexistentes;\n"
